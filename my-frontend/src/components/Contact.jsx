@@ -5,16 +5,16 @@ function Contact() {
   const [footer, setFooter] = useState(null);
 
   useEffect(() => {
-    fetch("https://renowned-unity-60b52ac485.strapiapp.com/api/contact?populate=*")
-      .then((res) => res.json())
-      .then((res) => setData(res.data.attributes))
-      .catch((err) => console.error(err));
+  fetch("https://renowned-unity-60b52ac485.strapiapp.com/api/contact?populate=*")
+    .then((res) => res.json())
+    .then((res) => setData(res.data)) // ✅ FIXED
+    .catch((err) => console.error(err));
 
-    fetch("https://renowned-unity-60b52ac485.strapiapp.com/api/contact?populate=*")
-      .then((res) => res.json())
-      .then((res) => setFooter(res.data[0]?.attributes))
-      .catch((err) => console.error(err));
-  }, []);
+  fetch("https://renowned-unity-60b52ac485.strapiapp.com/api/footers?populate=*")
+    .then((res) => res.json())
+    .then((res) => setFooter(res.data[0])) // ✅ FIXED
+    .catch((err) => console.error(err));
+    }, []);
 
   if (!data) return <p>Loading...</p>;
 
