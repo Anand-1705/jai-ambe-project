@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -13,14 +13,10 @@ import About from "./components/About";
 import Hero from "./components/Hero";
 import Navbar from "./components/Navbar";
 
-// IMAGES
-import transport from "./assets/transport.png";
-import planetary from "./assets/planetary_gear.png";
-import helical from "./assets/helical_gear.png";
-import cncMilling from "./assets/cnc_milling.png";
-import robot from "./assets/robot_speed.png";
-
 function App() {
+
+  // 🔥 STATE FOR STRAPI DATA
+  const [contactData, setContactData] = useState(null);
 
   useEffect(() => {
     // AOS INIT
@@ -68,37 +64,30 @@ function App() {
 
     sections.forEach((section) => observer.observe(section));
 
+    // 🔥 FETCH DATA FROM STRAPI
+    fetch("https://renowned-unity-60b52ac485.strapiapp.com/api/contact")
+      .then(res => res.json())
+      .then(data => {
+        console.log("STRAPI DATA:", data);
+        setContactData(data.data);
+      })
+      .catch(err => console.error("API ERROR:", err));
+
   }, []);
 
   return (
     <>
-      {/* NAVBAR */}
       <Navbar />
-
-      {/* HERO */}
       <Hero />
-
-      {/* ABOUT */}
       <About />
-
-      {/* PRODUCTS */}
       <Products />
-
-      {/* MANUFACTURING */}
       <Manufacturing />
-
-      {/* QUALITY */}
       <Quality />
-
       <Applications />
-
-
-      {/* INFRASTRUCTURE */} 
       <Infrastructure />
 
-      {/* CONTACT */}
-      <Contact />
-
+      {/* 🔥 PASS DATA TO CONTACT */}
+      <Contact data={contactData} />
     </>
   );
 }
