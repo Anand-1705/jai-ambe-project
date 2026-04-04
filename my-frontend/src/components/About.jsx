@@ -17,7 +17,7 @@ function About() {
 
   if (!data) return <p className="text-center mt-5">Loading...</p>;
 
-  //  Safe rich text extraction
+  // rich text extraction
   const description =
     data.description?.[0]?.children?.[0]?.text || "";
 
