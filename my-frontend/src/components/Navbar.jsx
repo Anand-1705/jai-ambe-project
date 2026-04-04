@@ -42,10 +42,14 @@ function Navbar() {
             <ul className="navbar-nav main-nav text-uppercase fw-semibold small">
 
               {menu
-                .sort((a, b) => a.attributes.order - b.attributes.order)
+                .sort((a, b) => {
+                  const orderA = a?.attributes?.order ?? 0;
+                  const orderB = b?.attributes?.order ?? 0;
+                  return orderA - orderB;
+                })
                 .map((item) => {
-                  const title = item.attributes.title;
-                  const link = item.attributes.link;
+                  const title = item?.attributes?.title;
+                  const link = item?.attributes?.link;
 
                   return (
                     <li className="nav-item" key={item.id}>
@@ -58,7 +62,7 @@ function Navbar() {
                     </li>
                   );
                 })}
-
+                
             </ul>
           </div>
 

@@ -1,37 +1,29 @@
 import { useEffect, useState } from "react";
-
-const API_URL = "https://renowned-unity-60b52ac485.strapiapp.com";
+import aboutImg from "../assets/about.png";
 
 function About() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    fetch(`${API_URL}/api/about?populate=*`)
+    fetch("https://renowned-unity-60b52ac485.strapiapp.com/api/about?populate=*") // ✅ FIXED
       .then((res) => res.json())
       .then((res) => {
-        console.log("ABOUT API:", res);
-        setData(res.data); // correct for single type
+        console.log("API:", res);
+        setData(res.data); // ✅ NO [0]
       })
       .catch((err) => console.error(err));
   }, []);
 
-  if (!data) return <p className="text-center mt-5">Loading...</p>;
+  if (!data) return <p>Loading...</p>;
 
-  // rich text extraction
   const description =
     data.description?.[0]?.children?.[0]?.text || "";
-
-  //  Dynamic image from Strapi
-  const imageUrl = data.image?.url
-    ? API_URL + data.image.url
-    : null;
 
   return (
     <section id="about" className="section-padding bg-light">
       <div className="container">
         <div className="row align-items-center">
 
-          {/* LEFT */}
           <div className="col-lg-6">
             <h2>{data.title}</h2>
 
@@ -39,32 +31,23 @@ function About() {
 
             <div className="d-flex gap-4 mt-3">
               <div>
-                <h4 className="text-info">
-                  {data.experience || 0}+
-                </h4>
+                <h4 className="text-info">{data.experience}+</h4>
                 <p>Years Experience</p>
               </div>
 
               <div>
-                <h4 className="text-info">
-                  {data.products || 0}+
-                </h4>
+                <h4 className="text-info">{data.products}+</h4>
                 <p>Products</p>
               </div>
             </div>
           </div>
 
-          {/* RIGHT */}
           <div className="col-lg-6">
-            {imageUrl ? (
-              <img
-                src={imageUrl}
-                alt="About"
-                className="img-fluid rounded"
-              />
-            ) : (
-              <p>No Image</p>
-            )}
+            <img
+              src={aboutImg}
+              alt="About"
+              className="img-fluid rounded"
+            />
           </div>
 
         </div>

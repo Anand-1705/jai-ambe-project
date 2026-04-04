@@ -16,7 +16,7 @@ function Manufacturing() {
       .catch((err) => console.log(err));
 
     //  PROCESSES 
-    fetch(`${API_URL}/api/manfacturing-process?populate=*`)
+    fetch(`${API_URL}/api/manfacturing-processes?populate=*`)
       .then((res) => res.json())
       .then((res) => {
         setProcesses(res.data || []);
