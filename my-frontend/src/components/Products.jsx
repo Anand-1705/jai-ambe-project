@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+
+const API = "https://renowned-unity-60b52ac485.strapiapp.com";
 
 function Products() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:1337/api/bearings?populate=*")
+    fetch(`${API}/api/bearings?populate=*`)
       .then((res) => res.json())
-      .then((data) => {
-        console.log("API DATA:", data); // 👈 IMPORTANT (check this)
-        setProducts(data.data);
-      })
+      .then((data) => setProducts(data.data))
       .catch((err) => console.log(err));
   }, []);
 
@@ -17,19 +16,14 @@ function Products() {
     <section id="products" className="section-padding">
       <div className="container">
         <h2 className="text-center mb-5 fw-bold">
-             Precision Bearing Solutions
+          Precision Bearing Solutions
         </h2>
 
         <div className="row">
           {products.map((item, i) => {
-            
-            // ✅ SAFE ACCESS
-            const title = item?.title || item?.attributes?.title;
-            const desc = item?.description || item?.attributes?.description;
-
-            const image =
-              item?.image?.url ||
-              item?.attributes?.image?.data?.attributes?.url;
+            const title = item.title;
+            const desc = item.description;
+            const image = item.image?.url;
 
             return (
               <div className="col-md-6" key={i}>
@@ -37,13 +31,9 @@ function Products() {
 
                   {image && (
                     <img
-                      src={`http://localhost:1337${image}`}
+                      src={API + image}
                       alt={title}
-                      style={{
-                        width: "100%",
-                        height: "300px",
-                        objectFit: "cover",
-                      }}
+                      style={{ height: "300px", objectFit: "cover" }}
                     />
                   )}
 
@@ -55,6 +45,7 @@ function Products() {
             );
           })}
         </div>
+
       </div>
     </section>
   );

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 
+const API_URL = "https://renowned-unity-60b52ac485.strapiapp.com";
+
 function Applications() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:1337/api/applications?populate=*")
+    fetch(`${API_URL}/api/applications?populate=*`)
       .then((res) => res.json())
       .then((res) => {
         setData(res.data || []);
@@ -14,32 +16,37 @@ function Applications() {
 
   return (
     <section id="industries" className="py-5 bg-light">
-      <div className="container-fluid text-center" style={{ padding: "0 50px" }}>
-        
+      <div className="container text-center">
+
         <h2 className="fw-bold mb-5">Applications</h2>
 
-        <div className="row g-3 justify-content-center">
-          {data.slice(0, 4).map((item, i) => (
-            <div className="col-md-6 col-lg-3" key={i}>
-              <div className="card p-3 shadow">
-                
-                <img
-                  src={
-                    item.image?.url
-                      ? "http://localhost:1337" + item.image.url
-                      : "https://via.placeholder.com/300x200"
-                  }
-                  className="img-fluid rounded w-100"
-                  style={{
-                    height: "280px",
-                    objectFit: "cover",
-                  }}
-                  alt="application"
-                />
+        <div className="row g-4">
+          {data.map((item, i) => {
+            const imageUrl =
+              item.attributes?.image?.data?.attributes?.url;
 
+            return (
+              <div className="col-md-6 col-lg-3" key={i}>
+                <div className="card p-2 shadow-sm">
+
+                  <img
+                    src={
+                      imageUrl
+                        ? API_URL + imageUrl
+                        : "https://via.placeholder.com/300x200"
+                    }
+                    className="img-fluid rounded"
+                    style={{
+                      height: "260px",
+                      objectFit: "cover",
+                    }}
+                    alt="application"
+                  />
+
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
       </div>

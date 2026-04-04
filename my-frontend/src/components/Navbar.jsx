@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import logo from "../assets/company_logo.png"; // ✅ your original logo
+import logo from "../assets/company_logo.png";
+
+const API_URL = "https://renowned-unity-60b52ac485.strapiapp.com";
 
 function Navbar() {
   const [menu, setMenu] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:1337/api/navbars")
+      .get(`${API_URL}/api/navbars?populate=*`)
       .then((res) => {
-        setMenu(res.data.data);
+        setMenu(res.data.data || []);
       })
       .catch((err) => {
         console.log(err);
@@ -21,9 +23,9 @@ function Navbar() {
       <nav className="navbar navbar-expand-lg navbar-light bg-white py-3">
         <div className="container">
 
-          {/* ✅ LOGO (ORIGINAL) */}
+          {/* LOGO */}
           <a className="navbar-brand" href="#home">
-            <img src={logo} alt="logo" style={{ height: "140px" }} />
+            <img src={logo} alt="logo" style={{ height: "100px" }} />
           </a>
 
           {/* TOGGLER */}
@@ -39,20 +41,23 @@ function Navbar() {
           <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul className="navbar-nav main-nav text-uppercase fw-semibold small">
 
-              {menu.length > 0 &&
-                menu
-                  .sort((a, b) => a.order - b.order)
-                  .map((item) => (
+              {menu
+                .sort((a, b) => a.attributes.order - b.attributes.order)
+                .map((item) => {
+                  const title = item.attributes.title;
+                  const link = item.attributes.link;
+
+                  return (
                     <li className="nav-item" key={item.id}>
                       <a
                         className="nav-link"
-                        href={`#${item.link ? item.link.replace("/", "") : ""}`}
+                        href={`#${link?.replace("/", "")}`}
                       >
-                        {item.title}
+                        {title}
                       </a>
                     </li>
-                  ))
-              }
+                  );
+                })}
 
             </ul>
           </div>

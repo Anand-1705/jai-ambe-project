@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 
+const API = "https://renowned-unity-60b52ac485.strapiapp.com";
+
 function Quality() {
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:1337/api/service-cards?populate=*")
+    fetch(`${API}/api/service-cards?populate=*`)
       .then((res) => res.json())
-      .then((data) => {
-        setCards(data.data || []);
-      });
+      .then((data) => setCards(data.data || []))
+      .catch((err) => console.error(err));
   }, []);
 
   return (
@@ -25,11 +26,13 @@ function Quality() {
 
           {cards.map((card, index) => {
 
-            const title = card.title;
+            // Strapi v5 safe access
+            const title = card?.attributes?.title || card.title;
 
-            const imageUrl = card.image?.url
-              ? `http://localhost:1337${card.image.url}`
-              : "";
+            const imageUrl =
+              card?.attributes?.image?.data?.attributes?.url
+                ? API + card.attributes.image.data.attributes.url
+                : "";
 
             return (
               <div
@@ -39,15 +42,16 @@ function Quality() {
                 data-aos-delay={index * 200}
               >
 
-                {/* ORIGINAL CARD */}
                 <div className="service-item position-relative overflow-hidden">
 
                   <div className="service-img">
-                    <img
-                      src={imageUrl}
-                      alt={title}
-                      className="img-fluid w-100"
-                    />
+                    {imageUrl && (
+                      <img
+                        src={imageUrl}
+                        alt={title}
+                        className="img-fluid w-100"
+                      />
+                    )}
                   </div>
 
                   <div className="service-text text-center">
