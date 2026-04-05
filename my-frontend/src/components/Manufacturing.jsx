@@ -39,11 +39,11 @@ function Manufacturing() {
 
         {mainImage && (
           <img
-            src={mainImage}
-            alt="Manufacturing"
-            className="img-fluid rounded shadow mb-5"
-            style={{ maxWidth: "1000px" }}
-          />
+              src={mainImage}
+              alt="Manufacturing"
+              className="img-fluid rounded shadow mb-5"
+              style={{ maxWidth: "1000px" }}
+            />
         )}
 
         <div className="row g-4 justify-content-center">

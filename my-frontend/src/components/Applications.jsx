@@ -31,10 +31,12 @@ function Applications() {
 
                   <img
                     src={
-                      imageUrl
-                        ? API_URL + imageUrl
-                        : "https://via.placeholder.com/300x200"
-                    }
+                          imageUrl
+                            ? imageUrl.startsWith("http")
+                              ? imageUrl
+                              : API_URL + imageUrl
+                            : ""
+                        }
                     className="img-fluid rounded"
                     style={{
                       height: "260px",

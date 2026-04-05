@@ -44,7 +44,11 @@ function About() {
 
           <div className="col-lg-6">
             <img
-              src={aboutImg}
+             src={
+                    imageUrl?.startsWith("http")
+                      ? imageUrl
+                      : API_URL + imageUrl
+                  }
               alt="About"
               className="img-fluid rounded"
             />

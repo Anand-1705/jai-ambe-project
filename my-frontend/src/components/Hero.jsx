@@ -76,7 +76,11 @@ function Hero() {
           {/* RIGHT IMAGE */}
           <div className="col-lg-5">
             <img
-              src={imageUrl}
+              src={
+                    imageUrl?.startsWith("http")
+                      ? imageUrl
+                      : API_URL + imageUrl
+                  }
               className="img-fluid rounded shadow-lg"
               alt="hero"
             />

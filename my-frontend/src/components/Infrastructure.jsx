@@ -81,7 +81,11 @@ function Infrastructure() {
           <div className="col-lg-6">
             <div className="infra-gallery">
               <img
-                src={imageUrl}
+                src={
+                    imageUrl?.startsWith("http")
+                      ? imageUrl
+                      : API_URL + imageUrl
+                  }
                 alt="Infrastructure"
                 className="img-fluid rounded shadow-sm"
               />

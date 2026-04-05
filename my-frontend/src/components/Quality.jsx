@@ -47,7 +47,7 @@ function Quality() {
                   <div className="service-img">
                     {imageUrl && (
                       <img
-                        src={imageUrl}
+                        src={imageUrl?.startsWith("http") ? imageUrl : API_URL + imageUrl}
                         alt={title}
                         className="img-fluid w-100"
                       />

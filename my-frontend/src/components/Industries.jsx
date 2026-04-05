@@ -3,7 +3,11 @@ function Industries() {
     <section id="industries" className="section-padding bg-light">
       <div className="container text-center">
         <h2>Industries</h2>
-        <img src="https://via.placeholder.com/600x300" />
+        <img src={
+                    imageUrl?.startsWith("http")
+                      ? imageUrl
+                      : API_URL + imageUrl
+                  } />
       </div>
     </section>
   );

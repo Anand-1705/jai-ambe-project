@@ -25,7 +25,11 @@ function Navbar() {
 
           {/* LOGO */}
           <a className="navbar-brand" href="#home">
-            <img src={logo} alt="logo" style={{ height: "100px" }} />
+            <img
+              src={logo?.startsWith("http") ? logo : API_URL + logo}
+              alt="logo"
+              style={{ height: "100px" }}
+            />
           </a>
 
           {/* TOGGLER */}
@@ -62,7 +66,7 @@ function Navbar() {
                     </li>
                   );
                 })}
-                
+
             </ul>
           </div>
 

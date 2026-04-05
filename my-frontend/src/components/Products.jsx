@@ -31,7 +31,7 @@ function Products() {
 
                   {image && (
                     <img
-                      src={API + image}
+                      src={image?.startsWith("http") ? image : API + image}
                       alt={title}
                       style={{ height: "300px", objectFit: "cover" }}
                     />
