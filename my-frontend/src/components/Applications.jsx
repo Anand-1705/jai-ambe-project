@@ -4,6 +4,7 @@ const API_URL = "https://renowned-unity-60b52ac485.strapiapp.com";
 
 function Applications() {
   const [data, setData] = useState([]);
+   const imageUrl = data?.image?.url;
 
   useEffect(() => {
     fetch(`${API_URL}/api/applications?populate=*`)

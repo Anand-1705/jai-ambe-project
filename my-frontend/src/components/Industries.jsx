@@ -1,4 +1,5 @@
 function Industries() {
+   const imageUrl = data?.image?.url;
   return (
     <section id="industries" className="section-padding bg-light">
       <div className="container text-center">

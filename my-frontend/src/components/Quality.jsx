@@ -4,6 +4,7 @@ const API = "https://renowned-unity-60b52ac485.strapiapp.com";
 
 function Quality() {
   const [cards, setCards] = useState([]);
+   const imageUrl = data?.image?.url;
 
   useEffect(() => {
     fetch(`${API}/api/service-cards?populate=*`)

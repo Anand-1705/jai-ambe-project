@@ -5,6 +5,7 @@ const API_URL = "https://renowned-unity-60b52ac485.strapiapp.com";
 function Manufacturing() {
   const [section, setSection] = useState(null);
   const [processes, setProcesses] = useState([]);
+   const imageUrl = data?.image?.url;
 
   useEffect(() => {
     //  SECTION

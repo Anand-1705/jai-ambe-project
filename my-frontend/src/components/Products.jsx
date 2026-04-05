@@ -4,6 +4,7 @@ const API = "https://renowned-unity-60b52ac485.strapiapp.com";
 
 function Products() {
   const [products, setProducts] = useState([]);
+   const imageUrl = data?.image?.url;
 
   useEffect(() => {
     fetch(`${API}/api/bearings?populate=*`)

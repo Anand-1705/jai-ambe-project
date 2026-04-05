@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 function Contact() {
   const [data, setData] = useState(null);
   const [footer, setFooter] = useState(null);
+   const imageUrl = data?.image?.url;
 
   useEffect(() => {
   fetch("https://renowned-unity-60b52ac485.strapiapp.com/api/contact?populate=*")

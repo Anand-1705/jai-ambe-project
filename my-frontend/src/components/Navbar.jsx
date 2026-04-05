@@ -6,6 +6,7 @@ const API_URL = "https://renowned-unity-60b52ac485.strapiapp.com";
 
 function Navbar() {
   const [menu, setMenu] = useState([]);
+   const imageUrl = data?.image?.url;
 
   useEffect(() => {
     axios
