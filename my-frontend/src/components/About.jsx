@@ -4,6 +4,7 @@ import aboutImg from "../assets/about.png";
 function About() {
   const [data, setData] = useState(null);
    const imageUrl = data?.image?.url;
+  const API_URL = "https://renowned-unity-60b52ac485.strapiapp.com";
 
   useEffect(() => {
     fetch("https://renowned-unity-60b52ac485.strapiapp.com/api/about?populate=*") // ✅ FIXED
