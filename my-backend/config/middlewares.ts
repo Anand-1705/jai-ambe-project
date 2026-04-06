@@ -4,7 +4,28 @@ const config: Core.Config.Middlewares = [
   'strapi::logger',
   'strapi::errors',
   'strapi::security',
-  'strapi::cors',
+
+  {
+    name: 'strapi::cors',
+    config: {
+      origin: [
+        'https://jai-ambe-project-ten.vercel.app',
+        'http://localhost:5173',
+        'http://localhost:3000',
+      ],
+      headers: '*',
+      methods: [
+        'GET',
+        'POST',
+        'PUT',
+        'PATCH',
+        'DELETE',
+        'OPTIONS',
+      ],
+      credentials: true,
+    },
+  },
+
   'strapi::poweredBy',
   'strapi::query',
   'strapi::body',

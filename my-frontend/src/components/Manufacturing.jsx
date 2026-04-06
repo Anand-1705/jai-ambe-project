@@ -9,7 +9,7 @@ function Manufacturing() {
 
   useEffect(() => {
     // SECTION
-    fetch(`${API_URL}/api/manfacturing-section?populate=*`)
+    fetch(`${API_URL}/api/manufacturing-section?populate=*`)
       .then((res) => res.json())
       .then((res) => {
         setSection(res.data?.attributes);
