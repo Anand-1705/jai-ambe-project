@@ -1,134 +1,128 @@
-import { useEffect, useState } from "react";
+// src/components/Contact.jsx
+import React, { useEffect, useState } from "react";
 
-function Contact() {
-  const [data, setData] = useState(null);
+const API_URL = "https://renowned-unity-60b52ac485.strapiapp.com";
+
+function Contact({ data }) {
   const [footer, setFooter] = useState(null);
-   const imageUrl = data?.image?.url;
 
   useEffect(() => {
-  fetch("https://renowned-unity-60b52ac485.strapiapp.com/api/contact?populate=*")
-    .then((res) => res.json())
-    .then((res) => setData(res.data)) // ✅ FIXED
-    .catch((err) => console.error(err));
-
-  fetch("https://renowned-unity-60b52ac485.strapiapp.com/api/footers?populate=*")
-    .then((res) => res.json())
-    .then((res) => setFooter(res.data[0])) // ✅ FIXED
-    .catch((err) => console.error(err));
-    }, []);
+    fetch(`${API_URL}/api/footers?populate=*`)
+      .then((res) => res.json())
+      .then((res) => {
+        // res.data is an array; take first item’s attributes
+        setFooter(res.data[0]?.attributes);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   if (!data) return <p>Loading...</p>;
 
+  // All contact fields come from data.attributes
+  const contact = data.attributes;
   const description =
-    data.description?.[0]?.children?.[0]?.text || "";
+    contact.description?.[0]?.children?.[0]?.text || "";
 
   return (
     <>
       <section id="contact" className="py-5 contact-section">
         <div className="container">
           <div className="row align-items-center gx-5 gy-4">
-
             {/* LEFT SIDE */}
             <div className="col-lg-5 text-white d-flex flex-column justify-content-center pe-lg-5">
-
               <h2 style={{ fontSize: "42px", fontWeight: "700" }}>
-                {data.title}
+                {contact.title}
               </h2>
-
               <h6
                 className="text-info"
                 style={{
                   fontSize: "20px",
                   fontWeight: "600",
                   marginBottom: "15px",
-                  letterSpacing: "1px"
+                  letterSpacing: "1px",
                 }}
               >
-                {data.subtitle}
+                {contact.subtitle}
               </h6>
-
               <p
                 style={{
                   fontSize: "18px",
                   lineHeight: "1.8",
                   color: "#e6e6e6",
                   marginBottom: "20px",
-                  maxWidth: "500px"
+                  maxWidth: "500px",
                 }}
               >
                 {description}
               </p>
-
               <p style={{ fontSize: "16px", marginBottom: "10px" }}>
                 <i className="fas fa-phone me-2 text-info"></i>
-                {data.phone}
+                {contact.phone}
               </p>
-
               <p style={{ fontSize: "16px", marginBottom: "10px" }}>
                 <i className="fas fa-map-marker-alt me-2 text-info"></i>
-                {data.address}
+                {contact.address}
               </p>
-
               <p style={{ fontSize: "16px" }}>
                 <i className="fas fa-envelope me-2 text-info"></i>
-                {data.email}
+                {contact.email}
               </p>
-
             </div>
-
             {/* RIGHT SIDE */}
             <div className="col-lg-7">
               <div className="card p-4 shadow">
-
-                <h5>{data.formTitle}</h5>
-
+                <h5>{contact.formTitle}</h5>
                 <form>
                   <div className="row g-3">
-
                     <div className="col-md-6">
-                      <input className="form-control" placeholder={data.namePlaceholder} />
+                      <input
+                        className="form-control"
+                        placeholder={contact.namePlaceholder}
+                      />
                     </div>
-
                     <div className="col-md-6">
-                      <input className="form-control" placeholder={data.emailPlaceholder} />
+                      <input
+                        className="form-control"
+                        placeholder={contact.emailPlaceholder}
+                      />
                     </div>
-
                     <div className="col-md-6">
-                      <input className="form-control" placeholder={data.companyPlaceholder} />
+                      <input
+                        className="form-control"
+                        placeholder={contact.companyPlaceholder}
+                      />
                     </div>
-
                     <div className="col-md-6">
-                      <input className="form-control" placeholder={data.phonePlaceholder} />
+                      <input
+                        className="form-control"
+                        placeholder={contact.phonePlaceholder}
+                      />
                     </div>
-
                     <div className="col-12">
-                      <textarea className="form-control" placeholder={data.messagePlaceholder}></textarea>
+                      <textarea
+                        className="form-control"
+                        placeholder={contact.messagePlaceholder}
+                      ></textarea>
                     </div>
-
                     <div className="col-12">
                       <button className="btn btn-primary">
-                        {data.buttonText}
+                        {contact.buttonText}
                       </button>
                     </div>
-
                   </div>
                 </form>
-
                 <div
                   className="mt-2"
                   style={{ overflow: "hidden", borderRadius: "10px" }}
                   dangerouslySetInnerHTML={{
-                    __html: data.mapEmbed || ""
+                    __html: contact.mapEmbed || "",
                   }}
                 ></div>
-
               </div>
             </div>
-
           </div>
         </div>
       </section>
-
       <footer>
         <div className="container">
           <p>
@@ -142,4 +136,4 @@ function Contact() {
   );
 }
 
-export default Contact; 
+export default Contact;
