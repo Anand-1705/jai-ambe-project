@@ -1,4 +1,5 @@
 // src/components/Navbar.jsx
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import logo from "../assets/company_logo.png";
@@ -10,6 +11,8 @@ function Navbar() {
   const [menu, setMenu] = useState([]);
   const [activeSection, setActiveSection] = useState("home");
 
+  // Fetch menu
+
   useEffect(() => {
 
     axios
@@ -18,28 +21,12 @@ function Navbar() {
 
         let items = res.data.data || [];
 
-        // 🔥 FORCE ORDER (your required order)
+        // Remove Industries if exists
 
-        const order = [
-          "home",
-          "about",
-          "products",
-          "manufacturing",
-          "quality",
-          "applications",
-          "infrastructure",
-          "contact",
-        ];
-
-        items.sort((a, b) => {
-          const aIndex = order.indexOf(
-            a.link?.replace("/", "")
-          );
-          const bIndex = order.indexOf(
-            b.link?.replace("/", "")
-          );
-          return aIndex - bIndex;
-        });
+        items = items.filter(
+          (item) =>
+            item.link?.replace("/", "") !== "industries"
+        );
 
         setMenu(items);
 
@@ -48,42 +35,42 @@ function Navbar() {
 
   }, []);
 
-  // 🔥 Active Scroll Detection
+  // Scroll detection (FIXED)
 
   useEffect(() => {
 
-    const sections = document.querySelectorAll("section");
+    const handleScroll = () => {
 
-    const observer = new IntersectionObserver(
+      const sections =
+        document.querySelectorAll("section");
 
-      (entries) => {
+      let current = "home";
 
-        entries.forEach((entry) => {
+      sections.forEach((section) => {
 
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
+        const sectionTop =
+          section.offsetTop - 150;
 
-        });
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute("id");
+        }
 
-      },
+      });
 
-      {
-        rootMargin: "-40% 0px -50% 0px",
-        threshold: 0.1,
-      }
+      setActiveSection(current);
 
+    };
+
+    window.addEventListener(
+      "scroll",
+      handleScroll
     );
 
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-
-    return () => {
-      sections.forEach((section) => {
-        observer.unobserve(section);
-      });
-    };
+    return () =>
+      window.removeEventListener(
+        "scroll",
+        handleScroll
+      );
 
   }, []);
 
@@ -98,11 +85,13 @@ function Navbar() {
           {/* Logo */}
 
           <a className="navbar-brand" href="#home">
+
             <img
               src={logo}
               alt="logo"
               style={{ height: "100px" }}
             />
+
           </a>
 
           <button
@@ -140,7 +129,9 @@ function Navbar() {
                           : ""
                       }`}
                     >
+
                       {item.title}
+
                     </a>
 
                   </li>

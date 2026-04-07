@@ -93,7 +93,7 @@ width: 100%;
 /*scroll offset fix so navbar doesn't cover section top.*/
 
 section {
-  scroll-margin-top: 120px;
+  scroll-margin-top: 140px;
 }
 
 /* =========================
