@@ -11,15 +11,13 @@ function Contact({ data }) {
       .then((res) => res.json())
       .then((res) => {
         // res.data is an array; take first item’s attributes
-        setFooter(res.data[0]?.attributes);
+        setFooter(res.data[0]);
       })
       .catch((err) => console.error(err));
   }, []);
 
-  if (!data) return <p>Loading...</p>;
-
-  // All contact fields come from data.attributes
-  const contact = data.attributes;
+  if (!footer) return <p>Loading...</p>;
+  const contact = footer;
   const description =
     contact.description?.[0]?.children?.[0]?.text || "";
 

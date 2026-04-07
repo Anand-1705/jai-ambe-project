@@ -26,7 +26,7 @@ function Hero() {
     ? imgPath.startsWith("http")
       ? imgPath
       : API_URL + imgPath
-    : "https://via.placeholder.com/500x300";
+    : "";
 
   const description =
     hero.description?.[0]?.children?.[0]?.text || "";

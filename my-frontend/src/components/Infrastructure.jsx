@@ -25,7 +25,7 @@ function Infrastructure() {
     ? imgPath.startsWith("http")
       ? imgPath
       : API_URL + imgPath
-    : "https://via.placeholder.com/500x300";
+    : "";
 
   return (
     <section id="infrastructure" className="section-padding">

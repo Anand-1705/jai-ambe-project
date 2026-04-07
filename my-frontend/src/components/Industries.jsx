@@ -10,12 +10,10 @@ function Industries() {
     fetch(`${API_URL}/api/industries?populate=*`)
       .then((res) => res.json())
       .then((res) => {
-        // If 'industries' is a singleton, it might be res.data.attributes
-        // If it's a collection, res.data is an array; adjust accordingly.
         if (Array.isArray(res.data)) {
-          setData(res.data[0]?.attributes);
+          setData(res.data[0]);
         } else {
-          setData(res.data?.attributes);
+          setData(res.data);
         }
       })
       .catch((err) => console.error(err));
@@ -23,7 +21,7 @@ function Industries() {
 
   if (!data) return <p>Loading...</p>;
 
-  const imgPath = data.image?.data?.attributes?.url;
+  const imgPath = data.image?.url;
   const imageUrl = imgPath
     ? imgPath.startsWith("http")
       ? imgPath

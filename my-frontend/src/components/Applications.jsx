@@ -21,7 +21,7 @@ function Applications() {
       <div className="container text-center">
         <h2 className="fw-bold mb-5">Applications</h2>
         <div className="row g-4">
-          {data.map((item, i) => {
+          {data?.map((item, i) => {
             const imgPath = item.attributes?.image?.data?.attributes?.url;
             const imageUrl = imgPath
               ? imgPath.startsWith("http")
@@ -39,7 +39,7 @@ function Applications() {
                         height: "260px",
                         objectFit: "cover",
                       }}
-                      alt="application"
+                      alt={item?.attributes?.title || "application"}
                     />
                   )}
                 </div>

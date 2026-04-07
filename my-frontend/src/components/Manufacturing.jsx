@@ -45,9 +45,12 @@ function Manufacturing() {
           />
         )}
         <div className="row g-4 justify-content-center">
-          {processes.map((item, i) => {
-            const title = item.attributes?.title;
-            const imgPath = item.attributes?.image?.data?.attributes?.url;
+          {processes?.map((item, i) => {
+            const title =
+              item?.attributes?.title || item?.title;
+            const imgPath =
+              item?.attributes?.image?.data?.attributes?.url ||
+              item?.image?.data?.attributes?.url;
             const imageUrl = imgPath ? API_URL + imgPath : "";
             return (
               <div className="col-md-3 col-6" key={i}>

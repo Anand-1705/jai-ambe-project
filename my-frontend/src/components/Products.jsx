@@ -21,9 +21,11 @@ function Products() {
         </h2>
         <div className="row">
           {products.map((item, i) => {
-            const title = item.attributes?.title;
-            const desc = item.attributes?.description;
-            const imgPath = item.attributes?.image?.data?.attributes?.url;
+            // STRAPI v5 FIX
+            const title = item.title;
+            const description =
+              item.description?.[0]?.children?.[0]?.text || "";
+            const imgPath = item.image?.url;
             const imageUrl = imgPath
               ? imgPath.startsWith("http")
                 ? imgPath
@@ -40,7 +42,7 @@ function Products() {
                     />
                   )}
                   <h4 className="mt-3">{title}</h4>
-                  <p>{desc}</p>
+                  <p>{description}</p>
                 </div>
               </div>
             );
