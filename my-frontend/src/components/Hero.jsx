@@ -11,8 +11,7 @@ function Hero() {
       .then((res) => res.json())
       .then((res) => {
         if (res?.data?.length > 0) {
-          // Set state to the attributes object of the first item
-          setHero(res.data[0].attributes);
+          setHero(res.data[0]);
         }
       })
       .catch((err) => console.error(err));
@@ -20,24 +19,17 @@ function Hero() {
 
   if (!hero) return <p>Loading...</p>;
 
-  // Determine image URL for background and image tag
-  const imgPath = hero.heroImage?.data?.attributes?.url;
-  const imageUrl = imgPath
-    ? imgPath.startsWith("http")
-      ? imgPath
-      : API_URL + imgPath
-    : "";
-
   const description =
     hero.description?.[0]?.children?.[0]?.text || "";
 
+  const imageUrl = hero.heroImage?.url || "";
   return (
     <section id="home" className="hero-section position-relative">
       {/* BACKGROUND */}
       <div
         className="hero-bg"
         style={{
-          backgroundImage: `url(${imageUrl})`,
+          backgroundImage: imageUrl ? `url(${imageUrl})` : "none",
         }}
       ></div>
       <div className="hero-overlay"></div>
@@ -61,13 +53,16 @@ function Hero() {
               {hero.buttonText2 || "Get in Touch"}
             </a>
           </div>
+
           {/* RIGHT IMAGE */}
           <div className="col-lg-5">
-            <img
-              src={imageUrl.startsWith("http") ? imageUrl : API_URL + imageUrl}
-              className="img-fluid rounded shadow-lg"
-              alt="hero"
-            />
+            {imageUrl && (
+              <img
+                src={imageUrl}
+                className="img-fluid rounded shadow-lg"
+                alt="hero"
+              />
+            )}
           </div>
         </div>
       </div>
