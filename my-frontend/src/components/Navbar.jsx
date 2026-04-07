@@ -1,78 +1,20 @@
 // src/components/Navbar.jsx
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import logo from "../assets/company_logo.png";
-
-const API_URL = "https://renowned-unity-60b52ac485.strapiapp.com";
 
 function Navbar() {
 
-  const [menu, setMenu] = useState([]);
-  const [activeSection, setActiveSection] = useState("home");
-
-  // Fetch menu
-
-  useEffect(() => {
-
-    axios
-      .get(`${API_URL}/api/navbars`)
-      .then((res) => {
-
-        let items = res.data.data || [];
-
-        // Remove Industries if exists
-
-        items = items.filter(
-          (item) =>
-            item.link?.replace("/", "") !== "industries"
-        );
-
-        setMenu(items);
-
-      })
-      .catch(console.error);
-
-  }, []);
-
-  // Scroll detection (FIXED)
-
-  useEffect(() => {
-
-    const handleScroll = () => {
-
-      const sections =
-        document.querySelectorAll("section");
-
-      let current = "home";
-
-      sections.forEach((section) => {
-
-        const sectionTop =
-          section.offsetTop - 150;
-
-        if (window.scrollY >= sectionTop) {
-          current = section.getAttribute("id");
-        }
-
-      });
-
-      setActiveSection(current);
-
-    };
-
-    window.addEventListener(
-      "scroll",
-      handleScroll
-    );
-
-    return () =>
-      window.removeEventListener(
-        "scroll",
-        handleScroll
-      );
-
-  }, []);
+  const navItems = [
+    { id: "home", label: "Home" },
+    { id: "about", label: "About" },
+    { id: "products", label: "Products" },
+    { id: "manufacturing", label: "Manufacturing" },
+    { id: "quality", label: "Quality" },
+    { id: "applications", label: "Applications" },
+    { id: "infrastructure", label: "Infrastructure" },
+    { id: "contact", label: "Contact" },
+  ];
 
   return (
 
@@ -85,22 +27,25 @@ function Navbar() {
           {/* Logo */}
 
           <a className="navbar-brand" href="#home">
-
             <img
               src={logo}
               alt="logo"
               style={{ height: "100px" }}
             />
-
           </a>
+
+          {/* Mobile Toggle */}
 
           <button
             className="navbar-toggler"
+            type="button"
             data-bs-toggle="collapse"
             data-bs-target="#navbarNav"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
+
+          {/* Menu */}
 
           <div
             className="collapse navbar-collapse justify-content-end"
@@ -109,36 +54,23 @@ function Navbar() {
 
             <ul className="navbar-nav">
 
-              {menu.map((item) => {
+              {navItems.map((item) => (
 
-                const sectionId =
-                  item.link?.replace("/", "");
+                <li
+                  className="nav-item"
+                  key={item.id}
+                >
 
-                return (
-
-                  <li
-                    className="nav-item"
-                    key={item.id}
+                  <a
+                    className="nav-link"
+                    href={`#${item.id}`}
                   >
+                    {item.label}
+                  </a>
 
-                    <a
-                      href={`#${sectionId}`}
-                      className={`nav-link ${
-                        activeSection === sectionId
-                          ? "active"
-                          : ""
-                      }`}
-                    >
+                </li>
 
-                      {item.title}
-
-                    </a>
-
-                  </li>
-
-                );
-
-              })}
+              ))}
 
             </ul>
 
