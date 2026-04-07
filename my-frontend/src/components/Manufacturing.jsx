@@ -8,34 +8,33 @@ function Manufacturing() {
   const [processes, setProcesses] = useState([]);
 
   useEffect(() => {
-    // SECTION
     fetch(`${API_URL}/api/manufacturing-section?populate=*`)
       .then((res) => res.json())
       .then((res) => {
         setSection(res.data);
       })
-      .catch((err) => console.error(err));
+      .catch(console.error);
 
-    // PROCESSES
     fetch(`${API_URL}/api/manfacturing-processes?populate=*`)
       .then((res) => res.json())
       .then((res) => {
         setProcesses(res.data || []);
       })
-      .catch((err) => console.error(err));
+      .catch(console.error);
   }, []);
 
-  if (!section) return <p>Loading...</p>;
+  if (!section) return null;
 
-  const mainImgPath = section.mainImage?.data?.attributes?.url;
-  const mainImage = mainImgPath
-    ? API_URL + mainImgPath
-    : null;
+  const mainImage = section.mainImage?.url;
 
   return (
     <section id="manufacturing" className="section-padding bg-light">
       <div className="container text-center">
-        <h2 className="fw-bold mb-5">{section.heading}</h2>
+
+        <h2 className="fw-bold mb-5">
+          {section.heading}
+        </h2>
+
         {mainImage && (
           <img
             src={mainImage}
@@ -44,18 +43,18 @@ function Manufacturing() {
             style={{ maxWidth: "1000px" }}
           />
         )}
+
         <div className="row g-4 justify-content-center">
-          {processes?.map((item, i) => {
-            const title =
-              item?.attributes?.title || item?.title;
-            const imgPath =
-              item?.attributes?.image?.data?.attributes?.url ||
-              item?.image?.data?.attributes?.url;
-            const imageUrl = imgPath ? API_URL + imgPath : "";
+          {processes.map((item, i) => {
+
+            const title = item.title;
+            const imageUrl = item.image?.url;
+
             return (
               <div className="col-md-3 col-6" key={i}>
                 <div className="card p-3 shadow-sm h-100">
-                  {imgPath && (
+
+                  {imageUrl && (
                     <img
                       src={imageUrl}
                       alt={title}
@@ -66,12 +65,17 @@ function Manufacturing() {
                       }}
                     />
                   )}
-                  <p className="mt-3 fw-semibold">{title}</p>
+
+                  <p className="mt-3 fw-semibold">
+                    {title}
+                  </p>
+
                 </div>
               </div>
             );
           })}
         </div>
+
       </div>
     </section>
   );
