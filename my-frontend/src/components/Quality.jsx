@@ -22,9 +22,9 @@ function Quality() {
         </div>
         {/* CARD ROW */}
         <div className="row g-4 justify-content-center">
-          {cards.map((card, index) => {
-            const title = card.attributes?.title || card.title;
-            const imgPath = card.attributes?.image?.data?.attributes?.url;
+          {cards?.map((card, index) => {
+            const title = card?.attributes?.title || card?.title;
+            const imgPath = card?.attributes?.image?.data?.attributes?.url;
             const imageUrl = imgPath
               ? imgPath.startsWith("http")
                 ? imgPath
@@ -32,7 +32,7 @@ function Quality() {
               : "";
             return (
               <div
-                key={card.id}
+                key={card?.id || index}
                 className="col-lg-6 col-md-6"
                 data-aos="fade-up"
                 data-aos-delay={index * 200}
@@ -42,7 +42,7 @@ function Quality() {
                     {imageUrl && (
                       <img
                         src={imageUrl}
-                        alt={title}
+                        alt={title || "service"}
                         className="img-fluid w-100"
                       />
                     )}

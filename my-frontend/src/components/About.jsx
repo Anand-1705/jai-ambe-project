@@ -10,8 +10,7 @@ function About() {
     fetch(`${API_URL}/api/about?populate=*`)
       .then((res) => res.json())
       .then((res) => {
-        // Strapi v4: res.data.attributes holds the actual fields
-        setData(res.data?.attributes);
+        setData(res.data);
       })
       .catch((err) => console.error(err));
   }, []);

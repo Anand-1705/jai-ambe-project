@@ -10,7 +10,7 @@ function Infrastructure() {
     fetch(`${API_URL}/api/infrastructure?populate=*`)
       .then((res) => res.json())
       .then((res) => {
-        setData(res.data?.attributes);
+        setData(res.data);
       })
       .catch((err) => console.error(err));
   }, []);
